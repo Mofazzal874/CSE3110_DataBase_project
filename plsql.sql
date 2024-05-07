@@ -178,3 +178,34 @@ begin
 end;
 /
 
+
+CREATE OR REPLACE TRIGGER increment_user_count
+AFTER INSERT ON Agencies
+FOR EACH ROW
+BEGIN
+    UPDATE Agencies
+    SET userId = userId + 1
+    WHERE id = :new.id;
+END;
+/
+
+UPDATE Agencies
+SET userId = userId + 1
+WHERE id = (SELECT MAX(id) FROM Agencies);
+
+--Create a trigger to update the total spent amount of a user when a new package is purchased:
+CREATE OR REPLACE TRIGGER update_spent_total
+AFTER INSERT ON Packages
+FOR EACH ROW
+BEGIN
+    UPDATE Users
+    SET spentTotal = spentTotal + :new.Price
+    WHERE id = (SELECT userId FROM Agencies WHERE id = :new.AgencyId);
+END;
+/
+
+
+    
+UPDATE Packages
+SET name = 'Luxury Vacation', AgencyId = 1, Area = 'Tropical Paradise', Details = 'All-inclusive luxury vacation package', Duration = '7 days', Price = 2500
+WHERE id = 1;
