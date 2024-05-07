@@ -93,19 +93,7 @@ begin
     dbms_output.put_line('Total Users: ' || v_count);
 end;
 
--- For Loop to Iterate Over a Collection and Extend an Array
-declare
-    type id_list is table of users.id%type;
-    v_ids id_list := id_list();
-begin
-    for rec in (select id from users) loop
-        v_ids.extend;
-        v_ids(v_ids.last) := rec.id;
-    end loop;
-    for i in 1..v_ids.count loop
-        dbms_output.put_line('User ID: ' || v_ids(i));
-    end loop;
-end;
+
 
 -- IF-ELSEIF-ELSE Construct
 declare
