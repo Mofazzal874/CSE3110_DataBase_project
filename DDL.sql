@@ -24,8 +24,6 @@ alter table users add (phone_number varchar2(20));
 -- Drop the TouristPlaces table
 drop table touristplaces;
 
--- Truncate the Users table
-truncate table users;
 
 -- Rename the Users table to Customers
 rename users to customers;
